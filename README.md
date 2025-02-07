@@ -50,6 +50,15 @@ Minicurso introdutorio a técnologia blockchain. Durante o cursos serão apresen
 
 
 
+**Observações Importantes e Melhorias:**
+
+*   **Detalhamento:** Esta tabela está *muito* mais detalhada que a anterior, refletindo a estrutura fornecida.
+*   **Slides Correspondentes:** Usei letras (X, Y, Z, W, V, A, B, C, D) como marcadores para os números dos slides.  Conforme você criar os slides, substitua essas letras pelos números corretos. Isso facilita o acompanhamento.  Por exemplo, se a seção "Definição de Blockchain" terminar no slide 10, você substituirá `1-X` por `1-10` e `X+1 - Y` por `11-Y`.
+*   **Tempos:** Os tempos fornecidos (3h, 2min, etc.) são *estimativas*.  Você precisará ajustar com base no seu ritmo e na profundidade que deseja dar a cada tópico.  A soma total dos tempos fornecidos *não* fecha exatamente com os 15h + 15h + 20h.  Você *precisa* fazer um ajuste fino.  O objetivo da tabela é dar uma *estrutura inicial*, não um cronograma rígido.
+*   **Módulo Ethereum:**  Separei a introdução ao Ethereum dos tópicos mais avançados (marcados como "OPCIONAIS").  Isso permite flexibilidade.  Se o tempo for curto, você pode focar na introdução.  Se tiver mais tempo, pode aprofundar.
+*   **Módulo Solidity:**  Este módulo está *intencionalmente* incompleto.  Você precisará detalhar os subtemas de Solidity, estimar os tempos e os slides correspondentes.
+*   **Módulo Projeto:** Este módulo *precisa* ser detalhado.  Divida o projeto em etapas (planejamento, desenvolvimento, testes, apresentação), atribua tempos a cada etapa e, idealmente, defina quais slides ou entregas serão esperadas em cada etapa.
+* **Número de Aulas:** Adaptei a coluna para "Nº de Aulas (2h)", que é mais claro e consistente.  Multiplique o número de aulas pelo fator 2 para ter a carga horária total.
 
 
 

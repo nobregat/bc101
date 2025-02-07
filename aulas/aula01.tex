@@ -1,0 +1,610 @@
+\documentclass{beamer}
+
+\usetheme{default} % Você pode escolher um tema diferente, como metropolis, etc.
+
+\usepackage[utf8]{inputenc} % Codificação UTF-8 (geralmente necessária)
+\usepackage[T1]{fontenc}    % Codificação de fontes
+\usepackage[brazil]{babel}   % Para hifenização e configurações em português
+\usepackage{graphicx}       % Para incluir imagens
+\usepackage{amsmath}        % Para equações
+\usepackage{minted}         % Para realce de sintaxe (melhor que verbatim)
+\usepackage{hyperref}       % Para links clicáveis (URLs, referências, etc.)
+\usepackage{ragged2e}        % Melhor alinhamento justificado
+\usepackage{booktabs}       % Para tabelas mais bonitas (toprule, midrule, bottomrule)
+\usepackage{fontawesome}  %Para icones como o github
+\usepackage{tikz}
+\usetikzlibrary{decorations.text} %For text along path
+\usepackage[many]{tcolorbox}
+\newcommand{\hsp}{\hspace{20pt}}
+\newtcbox{\mybox}[1][]{nobeforeafter,colframe=gray!75!black,colback=white,
+  colupper=black,boxrule=0.5pt,arc=4pt,boxsep=0pt,left=6pt,right=6pt,top=6pt,bottom=6pt,
+  hbox,drop shadow southeast,#1}
+
+%Comando pra usar o icone do github
+\newcommand{\github}[1]{%
+\href{#1}{\faGithub}
+}
+
+% Configurações para o minted (realce de sintaxe)
+\usemintedstyle{monokai} % Escolha um estilo (monokai, colorful, etc.)
+\setminted{
+    fontsize=\footnotesize,  % Tamanho da fonte no código
+    breaklines=true,        % Quebra de linha automática
+    baselinestretch=1.2,  % Espaçamento entre linhas
+    frame=lines,            % Moldura ao redor do código
+    framesep=2mm,          % Espaçamento da moldura
+    tabsize=4               % Tamanho da tabulação
+}
+
+
+\title{Blockchain 101}
+\author{Thiago Nóbrega \and \github{https://github.com/thiagonobrega}}
+\date{} % Data vazia, para não mostrar a data
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+  \begin{center}
+        \includegraphics[width=0.45\textwidth]{aulas/images/blockchain-7004923_1280.png}
+    \end{center}
+\end{frame}
+
+
+% \begin{frame}{Agenda}
+%   % Usando TikZ para desenhar o diagrama (mais flexível que mermaid)
+%   \begin{tikzpicture}[
+%     node distance = 0.8cm,
+%     every node/.style = {draw, rounded corners, text width=4cm, align=center},
+%     >=stealth, auto
+%   ]
+%     \node (intro) {Introdução};
+%     \node (carac) [below of=intro] {Características};
+%     \node (bdvs) [below of=carac] {Blockchain vs Database};
+
+%     \node (appintro) [right=1.5cm of intro] {Introdução};
+%     \node (solidity) [below of=appintro] {Solidity};
+%     \node (pratica) [below of=solidity] {Prática};
+
+%     \draw[->] (intro) -- (carac);
+%     \draw[->] (carac) -- (bdvs);
+
+%     \path[->, decorate, decoration={text along path,text={|\Large|Aplicações Descentralizadas},text align=center}]
+%          (appintro.north west) -- (appintro.south east);
+
+%     \draw[->] (appintro) -- (solidity);
+%     \draw[->] (solidity) -- (pratica);
+
+%     \node[above=0.5cm of intro, text width=10cm, align=center] {\Large Blockchain 101};
+
+%   \end{tikzpicture}
+% \end{frame}
+
+
+\begin{frame}{Disclaimer}
+Informações Importantes.
+\end{frame}
+
+\begin{frame}
+\frametitle{O que não vamos aprender}
+
+\begin{itemize}
+    \item Criptoativos
+    \item Valuation
+    \item Balanceamento de Carteira
+\end{itemize}
+
+
+\begin{columns}[T] % Alinhamento superior das colunas
+
+    \begin{column}{0.7\textwidth} % Largura da primeira coluna (texto)
+
+    \end{column}
+    \begin{column}{0.25\textwidth}
+        \includegraphics[width=\linewidth]{aulas/images/brais.png}
+        \vspace{0.5cm} % Espaçamento vertical
+        \includegraphics[width=\linewidth]{aulas/images/binance.png}
+        \vspace{0.5cm}
+         \includegraphics[width=\linewidth]{aulas/images/kriptomat.jpg}
+    \end{column}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Conceitos de Criptografia}
+\begin{itemize}
+    \item Funções Hash
+    \item Assinaturas Digitais
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Introdução}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Blockchain}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{TL;DR}
+    \begin{center}
+       \mybox{\textit{``Blockchain is a imutable append only transaction log''}}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Casos de uso}
+
+
+\begin{columns}[T] % Alinhamento superior das colunas
+
+    \begin{column}{0.7\textwidth} % Largura da primeira coluna (texto)
+            \begin{itemize}
+            \item E-GOV
+            \begin{itemize}
+                \item [$\rightarrow$] \href{https://repositorio.enap.gov.br/handle/1/4727}{b-CPF}
+                \item [$\rightarrow$] \href{https://portal.tcu.gov.br/imprensa/noticias/tcu-e-bndes-lancam-rede-blockchain-brasil-e-definem-proximos-passos.htm}{Assinatura de Contratos}
+                \item [$\rightarrow$] \href{https://einvestidor.estadao.com.br/criptomoedas/blockchain-governo-oficializa-uso-para-documentos/}{Validação de documentos}
+            \end{itemize}
+        \end{itemize}
+    \end{column}
+    \begin{column}{0.25\textwidth}
+        \includegraphics[width=\linewidth]{aulas/images/receita.png}
+        \vspace{0.5cm} % Espaçamento vertical
+        %\includegraphics[width=\linewidth]{aulas/images/e-gov.jpg} %substitua "e-gov.jpg" pelo nome correto do seu arquivo.
+    \end{column}
+\end{columns}
+
+
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Casos de uso}
+
+\begin{columns}[T]
+    \begin{column}{0.7\textwidth}
+    \begin{itemize}
+        \item Financial \& Commercial Service [1]
+        \begin{itemize}
+            \item [$\rightarrow$] Nasdaq
+            \item [$\rightarrow$] \href{https://www.oecd.org/corruption/integrity-forum/academic-papers/Georg\%20Eder-\%20Blockchain\%20-\%20Ghana_verified.pdf}{Honduran land}
+            \item [$\rightarrow$] Diamond Track
+        \end{itemize}
+    \end{itemize}
+    \end{column}
+    \begin{column}{0.25\textwidth}
+        \includegraphics[width=\linewidth]{aulas/images/bitcoin.jpg}\\
+        \vspace{0.5cm}
+        \includegraphics[width=\linewidth]{aulas/images/el_salvador.jpg}
+        \vspace{0.5cm}
+        \includegraphics[width=\linewidth]{aulas/images/blood_diamond.png}
+    \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Casos de uso}
+\begin{columns}[T]
+\begin{column}{0.7\textwidth}
+\begin{itemize}
+ \item Geospatial
+        \begin{itemize}
+            \item [$\rightarrow$] Secure sharing of geospatial wildlife data (SIGMOD) [2]
+            \item [$\rightarrow$] Geofences UAV (SIGSPATIAL) [3]
+        \end{itemize}
+        \item Health System [4-6]
+        \begin{itemize}
+          \item [$\rightarrow$] Medical records
+          \item [$\rightarrow$] Medical Images
+        \end{itemize}
+        \item Smartcity
+\end{itemize}
+\end{column}
+  \begin{column}{0.25\textwidth}
+        \includegraphics[width=\linewidth]{aulas/images/health1.png}
+        \vspace*{0.2cm}
+        \includegraphics[width=\linewidth]{aulas/images/geofence.jpg}
+         \vspace*{0.2cm}
+        \includegraphics[width=\linewidth]{aulas/images/data.jpg}
+        \vspace*{0.2cm}
+        \includegraphics[width=0.9\linewidth]{aulas/images/smart_city.jpg}
+    \end{column}
+\end{columns}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Curiosidades e Histórico}
+\begin{center}
+\includegraphics[width=0.7\linewidth]{aulas/images/netflix.png}
+
+\href{https://www.netflix.com/watch/80243756}{https://www.netflix.com/watch/80243756}
+\end{center}
+
+\end{frame}
+
+\begin{frame}
+ \begin{center}
+        \Large Quais razões levaram à adoção da Blockchain em tantos cenários diferentes?
+    \end{center}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Características}
+\begin{itemize}
+    \item Descentralizado
+    \item Imutável (\textit{Temper Evident})
+    \item Transparente/Auditável
+    \item Pode ser utilizado por adversários (\textit{Distrustful Parties})
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Características da rede}
+\end{frame}
+
+\begin{frame}
+\frametitle{Distribuição de dados}
+ \begin{center}
+        \includegraphics[width=0.8\linewidth]{aulas/images/data_distribution.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Tipos de rede}
+
+\textbf{Permissionada} (permissioned)
+\begin{itemize}
+    \item Públicas
+    \item Controle descentralizado
+    \item \textit{i.e.}, criptomoedas
+\end{itemize}
+
+\vspace{0.5cm} % Espaço entre as listas
+
+\textbf{Não permissionada} (permissionless)
+\begin{itemize}
+    \item Privadas (ou consórcio)
+    \item Controle centralizado*
+    \item \textit{i.e.}, Banco Central, LACChain
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+    \frametitle{Imutável}
+\end{frame}
+
+\begin{frame}
+    Estrutura da blockchain
+    \begin{center}
+\begin{tikzpicture}[
+    node distance = 1.5cm,
+     block/.style = {draw, rectangle, minimum height=1cm, minimum width=1.5cm,align=center} %Estilo dos blocos
+  ]
+
+    \node [block] (b1) {block\_1};
+    \node [block, right of=b1] (b2) {block\_2};
+    \node [block, right of=b2] (b3) {block\_3};
+    \node [block, right of=b3] (b4) {block\_4};
+     \node [block, right of=b4] (b5) {block\_5};
+      \node [block, right of=b5] (b6) {block\_6};
+
+  \path[->]
+    (b1) edge (b2)
+    (b2) edge (b3)
+    (b3) edge (b4)
+    (b4) edge (b5)
+    (b5) edge (b6)
+    ;
+
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Funções Hash}
+ \begin{columns}[T] % Alinhamento superior das colunas
+    \begin{column}{0.65\textwidth}
+    \begin{itemize}
+    \item Distribuição uniforme
+    \item Determinístico
+    \item Resistente à colisão
+\end{itemize}
+\end{column}
+\begin{column}{0.3\textwidth}
+ \includegraphics[width=\linewidth]{aulas/images/hash.png}
+\end{column}
+\end{columns}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Hashing}
+
+\[ h(x) = x \mod 2^{256} \]
+
+\vspace{0.5cm}
+
+Funções Hash:
+
+\begin{itemize}
+    \item Message Digest (md5)
+    \begin{itemize}
+        \item 128 bits
+    \end{itemize}
+    \item Secure Hash Algorithm (SHA)
+    \begin{itemize}
+        \item 256 bits
+    \end{itemize}
+\end{itemize}
+\href{https://andersbrownworth.com/blockchain/hash}{Exemplo da utilização de Hash}
+
+\end{frame}
+\begin{frame}
+      Estrutura da blockchain
+    \begin{center}
+\begin{tikzpicture}[
+    node distance = 1.5cm,
+     block/.style = {draw, rectangle, minimum height=1cm, minimum width=1.5cm,align=center} %Estilo dos blocos
+  ]
+
+    \node [block] (b1) {block\_1};
+    \node [block, right of=b1] (b2) {block\_2};
+    \node [block, right of=b2] (b3) {block\_3};
+    \node [block, right of=b3] (b4) {block\_4};
+     \node [block, right of=b4] (b5) {block\_5};
+      \node [block, right of=b5] (b6) {block\_6};
+
+  \path[->]
+    (b1) edge (b2)
+    (b2) edge (b3)
+    (b3) edge (b4)
+    (b4) edge (b5)
+    (b5) edge (b6)
+    ;
+
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Detalhe do encadeamento}
+\begin{center}
+\includegraphics[width=0.9\linewidth]{aulas/images/blockchain_detail.png}
+\end{center}
+\href{https://andersbrownworth.com/blockchain/blockchain}{Exemplo do encadeamento}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Transparente/Auditável}
+    \framesubtitle{Proveniência/procedência do dado}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Proveniência de dados}
+    \begin{enumerate}
+        \item O quê?
+        \item Quando?
+        \item Quem?
+    \end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+    \begin{center}
+         \textbf{Como o blockchain identifica os autores das alterações dos dados?}
+    \end{center}
+\end{frame}
+
+
+
+\begin{frame}
+    \frametitle{Criptografia Assimétrica}
+\end{frame}
+
+\begin{frame}
+\frametitle{Criptografia Assimétrica}
+\begin{center}
+\textit{
+\( M \leftarrow \) mensagem plana \\
+\( C \leftarrow \) mensagem codificada \\
+\( \text{chave\_pub} \leftarrow \) chave pública \\
+\( \text{chave\_priv} \leftarrow \) chave privada \\
+\( n \leftarrow \) tamanho da chave em bits
+}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{itemize}
+    \item \textbf{codifique}(\(M\), \(\text{chave\_pub}\)) = \(M^{\text{chave\_pub}} \mod n\)
+    \item \textbf{decodifique}(\(C\), \(\text{chave\_priv}\)) = \(C^{\text{chave\_priv}}\)
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Assinatura Digital}
+    \framesubtitle{Assinatura}
+\begin{center}
+ \begin{tikzpicture}[
+    node distance = 1cm,
+     every node/.style = {align=center},
+    >=stealth, auto
+  ]
+
+    \node (alice) {Alice};
+    \node (bob) [right=3cm of alice] {Bob};
+     \node (bc) [right=1.5cm of alice, yshift=-1.5cm] {Blockchain};
+
+    \draw[->] (alice) -- node[above] {1. hash\_doc = sha256(doc)} (alice);
+    \draw[->] (alice) -- node[above, yshift=0.2cm] {2. assinatura = codifique(hash\_doc,Alice\_priv\_key)} (alice);
+    \draw[->] (alice) -- node[above,xshift=-1cm] {3. envie(assinatura)} (bc);
+    \draw[->] (bc) -- node[above,xshift=1cm] {4. documento assinado(alice,doc,assinatura)} (alice);
+    \node[below=0.2cm of alice, text width=6cm, align=center,yshift=0.5cm] {Alice assina um documento na Blockchain};
+
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Assinatura Digital}
+    \framesubtitle{Validação da Assinatura}
+\begin{center}
+ \begin{tikzpicture}[
+    node distance = 1cm,
+     every node/.style = {align=center},
+    >=stealth, auto
+  ]
+
+    \node (alice) {Alice};
+    \node (bob) [right=3cm of alice] {Bob};
+     \node (bc) [right=1.5cm of alice, yshift=-1.5cm] {Blockchain};
+
+    \draw[->] (bc) -- node[above,xshift=-1cm] {1. documento assinado(alice,doc,assinatura)} (alice);
+    \draw[->] (bob) -- node[above, xshift=-0.8cm] {2. get\_chave\_pub(Alice)} (bc);
+      \draw[->] (bob) -- node[above,xshift=-0.8cm] {3. get\_assinatura(doc)} (bc);
+    \draw[->] (bc) -- node[above, xshift=1cm] {4. alice\_pk, assinatura} (bob);
+ \draw[->] (bob) -- node[above,yshift=0.2cm] {5. hash\_doc = sha256(doc)} (bob);
+    \draw[->] (bob) -- node[above,yshift=0.2cm] {6. hash\_doc = decodifique(alice\_pk,assinatura)} (bob);
+   
+
+ \node[below=0.2cm of bob, text width=6cm, align=center,yshift=0.5cm] {Como Bob verifica a assinatura de Alice?};
+
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Distrustful Parties}
+    \framesubtitle{Algoritmos de consenso}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\includegraphics[width=0.8\linewidth]{aulas/images/consensus.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Algoritmos de consenso das blockchains}
+\begin{itemize}
+    \item PoW (Proof of Work)
+    \begin{itemize}
+        \item [$\rightarrow$] Prova de Trabalho
+        \item [$\rightarrow$] Miner
+        \item [$\rightarrow$] Miners receive block rewards
+    \end{itemize}
+
+    \item PoS (Proof of Stake)
+        \begin{itemize}
+        \item [$\rightarrow$] To become a validator, a coin owner must "stake" a specific amount of coins (\textit{i.e.}, Ethereum 32 ETH)
+        \item [$\rightarrow$] Validators
+        \item [$\rightarrow$] Validators receive transactions fees as rewards
+    \end{itemize}
+\item Proof-Of-Authority (PoA)
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+    \frametitle{Limitadores do uso da Blockchain}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Limitadores do uso da Blockchain}
+    \begin{itemize}
+        \item Alto custo de armazenamento
+        \item Privacidade dos dados
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Blockchain é um tipo de sistema de gerenciamento de dados?}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sim}
+    ``Untangling blockchain: A data processing view of blockchain systems''
+    [8-12]
+\end{frame}
+
+\begin{frame}
+ \frametitle{Tipos de sistemas}
+ \begin{itemize}
+     \item \textbf{SGBDs tradicionais}
+        \begin{itemize}
+            \item [$\rightarrow$] MySQL, Oracle, Postgres, SQLServer
+        \end{itemize}
+     \item \textbf{SGBDs distribuídos}
+     \begin{itemize}
+         \item [$\rightarrow$] VoltDB, Oracle*, CosmosDB
+     \end{itemize}
+    \item \textbf{Sistemas de arquivo distribuídos}
+    \begin{itemize}
+        \item [$\rightarrow$] HDFS (Apache Hadoop)
+    \end{itemize}
+
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Comparativo}
+\centering
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+ & \textbf{Controle Centralizado} & \textbf{Transparente} & \textbf{Consultas}  & \textbf{Storage} & \textbf{T. Falha} \\ \midrule
+\textbf{BDs tradicionais}   & sim               & não            & complexas & grande         & não            \\
+\textbf{BDs distribuídos}  & sim               & não            & complexas & grande        & n.bizantina    \\
+\textbf{HDFS}                & sim               & não            & não      & grande          & n.bizantina    \\ \midrule
+\textbf{Blockchain}           & \textbf{não}               & \textbf{sim}            & \textbf{chave-valor}       & \textbf{pequena}         & bizantina  \\ \bottomrule
+\end{tabular}
+\end{frame}
+
+\begin{frame}
+\frametitle{Comparativo de transações por segundo}
+\begin{center}
+    \includegraphics[width=0.8\linewidth]{aulas/images/throughput.png}
+\end{center}
+\begin{footnotesize}
+ [9]
+\end{footnotesize}
+\end{frame}
+
+
+
+\begin{frame}
+    \frametitle{Quando não utilizar blockchain}
+    \begin{itemize}
+        \item Restrições quanto ao número de operações por segundo
+        \item Privacidade de armazenamento
+        \item Custo de Armazenamento
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Tema do próximo encontro}
+ \begin{center}
+   Como escrever aplicações descentralizadas utilizando Blockchain
+ \end{center}
+
+\end{frame}
+
+\end{document}

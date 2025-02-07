@@ -1,0 +1,59 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usetheme{metropolis} % Você pode escolher um tema diferente, como metropolis, etc.
+% default - Tema padrão.
+% metropolis - Um tema moderno e popular.
+% Madrid - Um tema clássico.
+% Berlin - Outro tema clássico.
+% Copenhagen - Tema com um design limpo.
+% Warsaw - Tema com um design simples.
+% AnnArbor - Tema com cores vibrantes.
+% Bergen - Tema com um design elegante.
+% PaloAlto - Tema com um design minimalista.
+% Rochester - Tema com um design formal.
+
+\usepackage[utf8]{inputenc} % Codificação UTF-8 (geralmente necessária)
+\usepackage[T1]{fontenc}    % Codificação de fontes
+\usepackage[brazil]{babel}   % Para hifenização e configurações em português
+\usepackage{graphicx}       % Para incluir imagens
+\usepackage{amsmath}        % Para equações
+\usepackage{hyperref}       % Para links clicáveis (URLs, referências, etc.)
+\usepackage{ragged2e}        % Melhor alinhamento justificado
+\usepackage{booktabs}       % Para tabelas mais bonitas (toprule, midrule, bottomrule)
+\usepackage{fontawesome}  %Para icones como o github
+\usepackage{tikz}
+\usetikzlibrary{decorations.text} %For text along path
+\usepackage[many]{tcolorbox}
+\newcommand{\hsp}{\hspace{20pt}}
+\newtcbox{\mybox}[1][]{nobeforeafter,colframe=gray!75!black,colback=white,
+  colupper=black,boxrule=0.5pt,arc=4pt,boxsep=0pt,left=6pt,right=6pt,top=6pt,bottom=6pt,
+  hbox,drop shadow southeast,#1}
+
+%Comando pra usar o icone do github
+% \newcommand{\github}[1]{%
+% \href{#1}{\faGithub}
+% }
+
+% \usepackage{minted}         % Para realce de sintaxe (melhor que verbatim)
+% % Configurações para o minted (realce de sintaxe)
+% \usemintedstyle{monokai} % Escolha um estilo (monokai, colorful, etc.)
+% \setminted{
+%     fontsize=\footnotesize,  % Tamanho da fonte no código
+%     breaklines=true,        % Quebra de linha automática
+%     baselinestretch=1.2,  % Espaçamento entre linhas
+%     frame=lines,            % Moldura ao redor do código
+%     framesep=2mm,          % Espaçamento da moldura
+%     tabsize=4               % Tamanho da tabulação
+% }
+
+
+\title{Blockchain 101}
+\author{Thiago Nóbrega}
+% \author{Thiago Nóbrega \and \github{https://github.com/thiagonobrega}}
+\date{} % Data vazia, para não mostrar a data
+
+
+\begin{document}
+    \maketitle
+    \include{./modulo1/casosdeuso.tex}
+\end{document}
